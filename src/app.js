@@ -42,9 +42,21 @@ function displayTemperature(response) {
     iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
-let apiKey = `7f7b212e480de247710aebbd9f9c68bd`;
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}&units=metric`;
+function search(city) {
 
+    let apiKey = `7f7b212e480de247710aebbd9f9c68bd`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayTemperature);
+}
 
+function handleSubmit(event) {
+    event.preventDefault();
 
-axios.get(apiUrl).then(displayTemperature);
+    let cityInputElement = document.querySelector("#city-input");
+    search(cityInputElement.value);
+}
+
+search("Brussels");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
